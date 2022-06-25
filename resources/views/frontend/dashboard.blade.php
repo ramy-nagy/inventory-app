@@ -5,11 +5,11 @@
         <div class="container-xl">
             <x-jet-validation-errors class="mb-4" />
             <hr>
-            <div class=" row">
-                @livewire('inventory-statistic')
-                @livewire('inventory')
+            @if (Session::get('batchId'))
+                @livewire('import-progress', ['batchId' => Session::get('batchId')])
+            @endif
 
-            </div>
+            @livewire('inventory')
         </div>
     </div>
     <div class="modal modal-blur fade " id="modal-report" tabindex="-1" role="dialog" aria-modal="true">

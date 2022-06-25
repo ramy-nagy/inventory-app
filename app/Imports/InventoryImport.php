@@ -8,16 +8,20 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-class InventoryImport implements ToCollection, WithChunkReading, WithStartRow
+
+class InventoryImport implements ToCollection, WithChunkReading, WithStartRow, WithBatchInserts
 {
+    public $store;
     public function collection(Collection $rows)
     {
         $filtered = $rows->filter(function ($value, $key) {
             return $value[2] == "A";
         });
+
         foreach ($filtered->all() as $row) {
             DB::table('inventories')->insertOrIgnore([
                 'sn' => $row[1],
@@ -34,9 +38,14 @@ class InventoryImport implements ToCollection, WithChunkReading, WithStartRow
         }
     }
 
-    public function chunkSize(): int
+    public function batchSize(): int
     {
         return 1000;
+    }
+
+    public function chunkSize(): int
+    {
+        return 2000;
     }
     public function startRow(): int
     {

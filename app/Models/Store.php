@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Store extends Model
 {
     use HasFactory;
-
+    protected $fillable = ['name', 'passcode'];
     /**
      * Get all of the comments for the Store
      *

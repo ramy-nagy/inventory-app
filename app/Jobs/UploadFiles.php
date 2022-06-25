@@ -18,7 +18,7 @@ class UploadFiles implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $path;
+    public $path, $store;
 
     /**
      * Create a new job instance.

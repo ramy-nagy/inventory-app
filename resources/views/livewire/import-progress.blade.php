@@ -13,6 +13,7 @@
         </div>
     @endif
 
+    
     @if ($importFinished)
         <div class="alert alert-success alert-dismissible" role="alert">
             <div class="d-flex">
